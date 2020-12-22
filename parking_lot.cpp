@@ -7,6 +7,7 @@ using namespace std;
 class Car
 {
 // as of now declaring all the data members as public
+
 public:
     string registration_number;
     string color;
@@ -16,9 +17,9 @@ public:
         registration_number = reg_no;
         color = clr;
     }
-} car;
+};
 
-class ParkingLot : public Car
+class ParkingLot //: public Car
 {
 
     // as of now declaring all the data members as public
@@ -92,15 +93,15 @@ public:
 
     int get_nearest_slot()
     {
-        if (available_parking_lots.size() > 0)
+        if (available_parking_lots.size())
         {
-            int slot_val;
+            int slot_val; // to store the nearest available slot value 
             slot_val = available_parking_lots.top();
             available_parking_lots.pop();
             return slot_val;
         }
         else
-            return NULL;
+            return 0;
     }
 
     // The below function will take the slot number to be made free
@@ -121,8 +122,9 @@ public:
             available_parking_lots.push(slot_to_be_freed);
             registration_slot_mapping.erase(found);
             Car car_to_leave = slot_car_mapping.at(slot_to_be_freed);
-            car_to_leave.color = found;
-            color_registration_mapping.erase(car_to_leave.color);
+            car_to_leave.registration_number = found;
+            color_registration_mapping[car_to_leave.color] = "";
+            slot_car_mapping.erase(slot_to_be_freed); 
             cout << "Slot number" << slot_to_be_freed << " is free" << endl;
             return true;
         }
@@ -140,10 +142,10 @@ public:
     {
         int slot_no;
         slot_no = get_nearest_slot();
-        if (slot_no == NULL)
+        if (slot_no == 0)
         {
             cout << "Sorry, parking lot is full" << endl;
-            return NULL;
+            return 0;
         }
 
         cout << " Allocated slot number is: " << slot_no << endl;
@@ -204,7 +206,7 @@ public:
 
     int slot_number_for_registration_number(string registration_number)
     {
-        int slot_number = NULL;
+        int slot_number = 0;
         if (auto itr = registration_slot_mapping.find(registration_number); itr != registration_slot_mapping.end()) // itr -> iterator
         {
             slot_number = itr->second; // itr->second = slot
