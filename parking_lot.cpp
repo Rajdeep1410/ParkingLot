@@ -160,12 +160,17 @@ public:
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        for (auto it = color_registration_mapping.begin(); it != color_registration_mapping.end(); it++)
+        // for (auto it = color_registration_mapping.begin(); it != color_registration_mapping.end(); it++)
+        // {
+        //     if (it->first == color)
+        //     {
+        //         registration_numbers.push_back(it->second);
+        //     }
+        // }
+        for (auto it : color_registration_mapping)
         {
-            if (it->first == color)
-            {
-                registration_numbers.push_back(it->second);
-            }
+            if (it.first == color)
+                registration_numbers.push_back(it.second);
         }
         cout << "Size of vector registration_numbers: " << registration_numbers.size() << endl;
         for (auto x : registration_numbers)
@@ -181,15 +186,16 @@ public:
     vector<int> slot_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        int c=0; //added
-        for (auto it = color_registration_mapping.begin(); it != color_registration_mapping.end(); it++)
+        int c = 0; //added
+        //for (auto it = color_registration_mapping.begin(); it != color_registration_mapping.end(); it++)
+        for(auto it : color_registration_mapping)
         {
-            cout<<"Loop number "<<c++; //added
-            cout<<"Registration Number = "<<it->second<<"color = "<<color<<endl; //added
-            if (it->first == color)
+            cout << "Loop number " << c++ <<" ";                                                 //added
+            cout << "Color in Reg map = "<<(it.first)<<" Registration Number = " << it.second << " color = " << color << endl; //added
+            if ((it.first) == color)
             {
-                cout<<"Registration Number "<<(it->second)<<" pushed with color = "<<(it->first)<<endl;//added
-                registration_numbers.push_back(it->second);
+                cout << "Registration Number " << (it.second) << " pushed with color = " << (it.first) << endl; //added
+                registration_numbers.push_back(it.second);
             }
         }
 
