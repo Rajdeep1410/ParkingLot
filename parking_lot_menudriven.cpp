@@ -146,18 +146,27 @@ public:
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
+        int flag = 0; // added
         for (auto it : registration_color_mapping)
         {
             if (it.second == color)
+            {
+                flag = 1;
                 registration_numbers.push_back(it.first);
+            }
         }
 
-        cout << "Registration numbers matching the given color are: " << endl;
-        for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
+        if (flag != 0)
         {
-            cout << registration_numbers[i] << ", ";
+            cout << "Registration numbers matching the given color are: " << endl;
+            for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
+            {
+                cout << registration_numbers[i] << ", ";
+            }
+            cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
         }
-        cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
+        else
+            cout << "No such cars with color " << color << endl;
 
         return registration_numbers;
     }
@@ -167,26 +176,37 @@ public:
     vector<int> slot_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
+        int flag = 0;
         for (auto it : registration_color_mapping)
         {
             if ((it.second) == color)
             {
+                flag = 1;
                 registration_numbers.push_back(it.first);
             }
         }
 
         vector<int> slots;
-        for (int i = 0; i < registration_numbers.size(); i++)
+        if (flag != 0)
         {
-            slots.push_back(registration_slot_mapping[registration_numbers[i]]);
+            // vector<int> slots;
+            for (int i = 0; i < registration_numbers.size(); i++)
+            {
+                slots.push_back(registration_slot_mapping[registration_numbers[i]]);
+            }
+
+            cout << "The slot numbers matching the given color are: " << endl;
+            for (int i = 0; i < slots.size() - 1; i++) // running till second-last
+            {
+                cout << slots[i] << ", ";
+            }
+            cout << slots[slots.size() - 1] << endl; // printing last stmt separately to avoid ending comma
         }
 
-        cout << "The slot numbers matching the given color are: " << endl;
-        for (int i = 0; i < slots.size() - 1; i++) // running till second-last
+        else
         {
-            cout << slots[i] << ", ";
+            cout << "No such cars with color " << color << endl;
         }
-        cout << slots[slots.size() - 1] << endl; // printing last stmt separately to avoid ending comma
 
         return slots;
     }
