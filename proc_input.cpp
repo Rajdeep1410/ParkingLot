@@ -111,33 +111,27 @@ int main(int argc, char *argv[])
             process(line);
         }
     }
+    // else
+    //     cout << "Wrong Command!" << endl;
+
+    // *************** File Handling part from here********************
     else
-        cout << "Wrong Command!" << endl;
+    {
+        // We assume argv[1] is a filename to open
+        ifstream the_file(argv[1]);
+
+        if (!the_file.is_open())    // check to see if file is open
+            cout << "Could not open file" << endl;
+        else
+        {
+            string line;
+            while (getline(the_file, line))
+            {
+                process(line);
+            }
+        }
+    }
+    // the_file is closed implicitly here
 
     return 0;
 }
-
-//     else
-//     {
-//         // We assume argv[1] is a filename to open
-//         ifstream the_file(argv[1]);
-//         // Always check to see if file opening succeeded
-//         if (!the_file.is_open())
-//             cout << "Could not open file\n";
-//         else
-//         {
-//             // char x;
-//             // // the_file.get ( x ) returns false if the end of the file
-//             // //  is reached or an error occurs
-//             // while (the_file.get(x))
-//             //     cout << x;
-
-//             std::string line;
-//             while (getline(the_file, line))
-//             {
-//                 process(line);
-//             }
-//         }
-//     }
-//     // the_file is closed implicitly here
-// }
