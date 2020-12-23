@@ -1,12 +1,9 @@
 #include <bits/stdc++.h>
-#include <map>
-#include <queue>
-#include <string>
-#include <vector>
 using namespace std;
 
 class Car
 {
+
 public:
     string registration_number;
     string color;
@@ -31,15 +28,15 @@ class ParkingLot
     map<int, Car> slot_car_mapping;
 
     // below is a priority queue to store the available parking lots.
+    // Using priority queue as this will always give minimum slot number in O(1) time
     priority_queue<int, vector<int>, greater<int>> available_parking_lots;
 
 public:
 
     // The below function takes total slots as parameter input and creates a parking lot accordingly
+    int flag = 0;
     bool create_parking_lot(int total_slots)
-    {
-       // Using min-heap(priority queue) as this will always give minimum slot number in O(1) time
-        
+    {    
         if ((total_slots > 0) && (flag != 1))   
         // this check is to handle case when total_slots given is 0 or user trying to create parking when 1 is already existing
         {
@@ -129,7 +126,7 @@ public:
             return 0;
         }
 
-        cout << " Allocated slot number is: " << slot_no << endl;
+        cout << "Allocated slot number is: " << slot_no << endl;
         slot_car_mapping.insert({slot_no, car});
         registration_slot_mapping.insert({car.registration_number, slot_no});
         registration_color_mapping.insert({car.registration_number, car.color});
@@ -151,7 +148,7 @@ public:
             }
         }
 
-        if (flag != 0)  // this flag handles condition when no car with given input color is found in parking lot
+        if (flag != 0)
         {
             cout << "Registration numbers matching the given color are: " << endl;
             for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
@@ -171,7 +168,7 @@ public:
     vector<int> slot_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        int flag = 0;   // this flag handles the condition when no car with given input color is found in parking lot
+        int flag = 0;
         for (auto it : registration_color_mapping)
         {
             if ((it.second) == color)
@@ -182,8 +179,9 @@ public:
         }
 
         vector<int> slots;
-        if (flag != 0)   // this flag handles condition when no car with given input color is found in parking lot
+        if (flag != 0)
         {
+            // vector<int> slots;
             for (int i = 0; i < registration_numbers.size(); i++)
             {
                 slots.push_back(registration_slot_mapping[registration_numbers[i]]);
