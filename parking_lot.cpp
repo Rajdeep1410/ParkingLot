@@ -5,7 +5,6 @@
 #include <map>
 #include <queue>    
 
-
 using namespace std;
 
 class Car
@@ -72,7 +71,7 @@ public:
             cout << "  " << itr->first << "\t\t" << itr->second.registration_number << "\t\t" << itr->second.color << endl;
         }
 
-        cout << endl;
+        //cout << endl;
         return true;
     }
 
