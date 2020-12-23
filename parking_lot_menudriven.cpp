@@ -1,13 +1,9 @@
 #include <bits/stdc++.h>
-// #include <queue>
-// #include <map>
-
 using namespace std;
 
 class Car
 {
     // as of now declaring all the data members as public
-
 public:
     string registration_number;
     string color;
@@ -40,20 +36,11 @@ public:
     /* Below constructor to modify and implement
 
     ParkingLot()
-    {
-
-        // registration_slot_mapping is a map(ordered by default) that will have key as registration_no(string) and value as slot(int) 
+    { 
         map<string, int> registration_slot_mapping;
-
-        // registration_color_mapping is a map(ordered by default) that will have key as color(string) and value as registration_no(string) 
         map<string, string> registration_color_mapping;
-
-        // slot_car_mapping is a map(ordered by default) to maintain the orders of cars while showing status
-        // it will have key as slot(int) and value as car(Car object) 
         map <int, Car> slot_car_mapping;
-
-        // we will initialize all slots as free
-        vector<int> available_parking_lots = {0};
+        priority_queue<int, vector<int>, greater<int>> available_parking_lots;
     }
 
     */
@@ -148,21 +135,7 @@ public:
         cout << " Allocated slot number is: " << slot_no << endl;
         slot_car_mapping.insert({slot_no, car});
         registration_slot_mapping.insert({car.registration_number, slot_no});
-        // // To spot error below loop
-        // cout<<"Iterating the registration_slot_mapping while parking "<<endl;
-        // for (auto it = registration_slot_mapping.begin(); it != registration_slot_mapping.end(); it++)
-        // {
-        //     cout<<"Registration Number = "<<it->first<<" Slot = "<<it->second<<endl;
-        // }
-        // //  added till here
         registration_color_mapping.insert({car.registration_number, car.color});
-        // // To spot error below loop
-        // cout<<"Iterating the color_registraion map while parking "<<endl;
-        // for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
-        // {
-        //     cout<<"Registration No = "<<it->first<<" Color = "<<it->second<<endl;
-        // }
-        // //  added till here
         return slot_no;
     }
 
@@ -171,25 +144,18 @@ public:
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        // for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
-        // {
-        //     if (it->first == color)
-        //     {
-        //         registration_numbers.push_back(it->second);
-        //     }
-        // }
         for (auto it : registration_color_mapping)
         {
             if (it.second == color)
                 registration_numbers.push_back(it.first);
         }
-        // cout << "Size of vector registration_numbers: " << registration_numbers.size() << endl;
 
-        for (int i = 0; i < registration_numbers.size()-1; i++) // running till second last 
-            {
-                cout << registration_numbers[i] << ", " ;
-            }
-            cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
+        cout << "Registration numbers matching the given color are: " << endl;
+        for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
+        {
+            cout << registration_numbers[i] << ", ";
+        }
+        cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
 
         return registration_numbers;
     }
@@ -200,29 +166,18 @@ public:
         vector<string> registration_numbers;
         int c = 0; //added
         // To spot error below loop
-        cout<<"Iterating the color_registraion map"<<endl;
+        cout << "Iterating the color_registraion map" << endl;
         for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
         {
-            cout<<"Regitration Number = "<<it->first<<" Color = "<<it->second<<endl;
+            cout << "Regitration Number = " << it->first << " Color = " << it->second << endl;
         }
         //  added till here
-        for(auto it : registration_color_mapping)
+        for (auto it : registration_color_mapping)
         {
-            // cout << "Loop number " << c++ <<" ";                                                 //added
-            // cout << "Registration in Reg map = "<<(it.first)<<" Color = " << it.second << " color required= " << color << endl; //added
             if ((it.second) == color)
             {
-                //cout << "Registration Number " << (it.first) << " pushed with color = " << (it.second) << endl; //added
                 registration_numbers.push_back(it.first);
             }
-            // /*added to see registration numers vector*/
-            // cout<<"Registration Numbers Vector :- "<<endl;
-            // for(int i = 0; i<registration_numbers.size();i++){
-            //     cout<<registration_numbers[i]<<", ";
-            // }
-            // cout<<endl;
-            // // addition completes for registration numbers
-
         }
 
         vector<int> slots;
@@ -232,9 +187,8 @@ public:
             slots.push_back(registration_slot_mapping[registration_numbers[i]]);
         }
 
-        // cout << "The size of slot vector is: " << slots.size() << endl; // added
         cout << "The slot numbers matching the given color are: " << endl;
-        for (int i = 0; i < slots.size() - 1; i++)
+        for (int i = 0; i < slots.size() - 1; i++) // running till second-last
         {
             cout << slots[i] << ", ";
         }
@@ -246,7 +200,7 @@ public:
     int slot_number_for_registration_number(string registration_number)
     {
         int slot_number = 0;
-        if (auto itr = registration_slot_mapping.find(registration_number); itr != registration_slot_mapping.end()) // itr gives iterator
+        if (auto itr = registration_slot_mapping.find(registration_number); itr != registration_slot_mapping.end())
         {
             slot_number = itr->second; // itr->second gives slot
             cout << slot_number << endl;
