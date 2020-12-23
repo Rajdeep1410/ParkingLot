@@ -3,39 +3,32 @@
 
 using namespace std;
 
-// from parking_lot import ParkingLot, Car
-
 ParkingLot parking_lot;
 
 void process(string command_params)
 {
 
-    vector<string> command_with_params;
+    vector<string> command;
     string word;                      // word variable to store word
     stringstream iss(command_params); // making a string stream
 
-    while (iss >> word) // Read each word and insert it into a vector
-        command_with_params.push_back(word);
-
-    // for(int i=0; i<command_with_params.size(); i++)
-    //     cout<<"Command with param ["<<i<<"] is: "<<command_with_params[i]<<endl;
-
-    vector<string> command;
-    command = command_with_params;
+    while (iss >> word) // Read each word and insert it into a vector 'command'
+        command.push_back(word);
 
     // for(int i=0; i<command.size(); i++)
     //     cout<<"Command ["<<i<<"] is: "<<command[i]<<endl;
+
 
     if (command[0] == "create_parking_lot")
     {
         if (command.size() != 2)
         {
             cout << "create_parking_lot needs no of slots as well" << endl;
+        }        
+        else if (isdigit(command[1][0]) == 0)
+        {
+            cout << "param should be 'integer type'" << endl;
         }
-        // else if (isdigit(stoi(command[1])) == 0)
-        // {
-        //     cout << "param should be 'integer type'" << endl;
-        // }
         else
         {
             parking_lot.create_parking_lot(stoi(command[1]));
@@ -62,10 +55,10 @@ void process(string command_params)
         {
             cout << "leave needs slot number as well" << endl;
         }
-        // else if (isdigit(stoi(command[1])) == 0)
-        // {
-        //     cout << "slot number should be 'integer type'" << endl;
-        // }
+        else if (isdigit(char(command[1][0])) == 0)
+        {
+            cout << "slot number should be 'integer type'" << endl;
+        }
 
         else
         {
@@ -110,15 +103,7 @@ void process(string command_params)
 int main(int argc, char *argv[])
 {
     if (argc != 2)
-    { // argc should be 2 for correct execution
-        // We print argv[0] assuming it is the program name
-        // cout << "usage: " << argv[0] << " <filename>\n";
-
-        // if len(sys.argv) == 1:
-        //     while True:
-        //         line = input()
-        //         process(line)
-
+    { 
         while (true)
         {
             string line;
