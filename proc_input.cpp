@@ -1,4 +1,9 @@
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <string>   
+#include <vector>
+#include <sstream>  // for stringstream
+#include <fstream> // for file handling
 #include "parking_lot.cpp"
 
 using namespace std;
@@ -93,7 +98,10 @@ void process(string command_params)
             parking_lot.slot_number_for_registration_number(command[1]);
     }
 
-    else if (command[0] == "exit")
+    else if(command[0] == "clear")  // to clear console screen
+        system("clear");
+
+    else if (command[0] == "exit")  // to exit from console back to shell
         exit(0);
 
     else
