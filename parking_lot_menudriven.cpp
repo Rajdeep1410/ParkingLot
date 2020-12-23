@@ -3,7 +3,7 @@ using namespace std;
 
 class Car
 {
-    // as of now declaring all the data members as public
+
 public:
     string registration_number;
     string color;
@@ -15,11 +15,8 @@ public:
     }
 };
 
-class ParkingLot //: public Car
+class ParkingLot
 {
-
-    // as of now declaring all the data members as public
-public:
     // registration_slot_mapping is an unordered_map that will have key as registration_no(string) and value as slot(int)
     unordered_map<string, int> registration_slot_mapping;
 
@@ -31,35 +28,34 @@ public:
     map<int, Car> slot_car_mapping;
 
     // below is a priority queue to store the available parking lots.
+    // Using priority queue as this will always give minimum slot number in O(1) time
     priority_queue<int, vector<int>, greater<int>> available_parking_lots;
 
-    /* Below constructor to modify and implement
-
-    ParkingLot()
-    { 
-        map<string, int> registration_slot_mapping;
-        map<string, string> registration_color_mapping;
-        map <int, Car> slot_car_mapping;
-        priority_queue<int, vector<int>, greater<int>> available_parking_lots;
-    }
-
-    */
+public:
 
     // The below function takes total slots as parameter input and creates a parking lot accordingly
-
+    int flag = 0;
     bool create_parking_lot(int total_slots)
-    {
-        // Using min-heap(priority queue) as this will always give minimum slot number in O(1) time
-        cout << "Created a parking lot with " << total_slots << " slots" << endl;
-        for (int i = 1; i <= total_slots; i++)
+    {    
+        if ((total_slots > 0) && (flag != 1))   
+        // this check is to handle case when total_slots given is 0 or user trying to create parking when 1 is already existing
         {
-            available_parking_lots.push(i);
+            cout << "Created a parking lot with " << total_slots << " slots" << endl;
+            flag = 1;
+            for (int i = 1; i <= total_slots; i++)
+            {
+                available_parking_lots.push(i);
+            }
+            return true;
         }
-        return true;
+        else
+        {
+            cout<< "Not possible to create parking lot" << endl;
+            return false;
+        }
     }
 
     // The below function returns the status of the parking lot
-
     bool status()
     {
         cout << "Slot No. \tRegistration No \tColour " << endl;
@@ -74,7 +70,6 @@ public:
     }
 
     // The below function returns the nearest available slot
-
     int get_nearest_slot()
     {
         if (available_parking_lots.size())
@@ -89,7 +84,6 @@ public:
     }
 
     // The below function will take the slot number to be made free
-
     bool leave(int slot_to_be_freed)
     {
         string found = "";
@@ -122,7 +116,6 @@ public:
 
     // The below function will park a car in an empty available slot and return the slot number
     // It takes a car object as input
-
     int park(Car car)
     {
         int slot_no;
@@ -133,7 +126,7 @@ public:
             return 0;
         }
 
-        cout << " Allocated slot number is: " << slot_no << endl;
+        cout << "Allocated slot number is: " << slot_no << endl;
         slot_car_mapping.insert({slot_no, car});
         registration_slot_mapping.insert({car.registration_number, slot_no});
         registration_color_mapping.insert({car.registration_number, car.color});
@@ -142,7 +135,6 @@ public:
 
     // The below function will give the Registration numbers of all cars of a particular colour
     // The color of the car is taken as parameter input
-
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
@@ -250,7 +242,8 @@ int main()
         cout << "5. To display registration_numbers_for_cars_with_colour" << endl;
         cout << "6. To display slot_numbers_for_cars_with_colour " << endl;
         cout << "7. To display slot_number_for_registration_number" << endl;
-        cout << "8. To EXIT" << endl;
+        cout << "8. To Clear Screen" << endl;
+        cout << "9. To EXIT" << endl;
         cout << "\nEnter your choice: ";
 
         cin >> choice;
@@ -308,14 +301,19 @@ int main()
             break;
 
         case 8:
+            cout << "Clearing Screen..." <<endl;
+            system("clear");
+            break;
+
+        case 9:
             cout << "Exiting!.." << endl;
             exit(0);
 
         default:
-            cout << "Wrong Choice! Please enter 1 to 8" << endl;
+            cout << "Wrong Choice! Please enter 1 to 9" << endl;
             break;
         }
-    } while (choice <= 8);
+    } while (choice <= 9);
 
     return 0;
 }
