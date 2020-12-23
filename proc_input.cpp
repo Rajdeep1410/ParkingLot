@@ -1,3 +1,15 @@
+/* 
+
+proc_input.cpp --> this is driver program for Parking Lot
+It contains the main() function and operates on the backend logic defined in parking_lot.cpp
+
+* Used with file file_inputs.txt or interactively
+
+Created By: Rajdeep Kundu
+Date: 23 Dec 2020
+
+*/ 
+
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <string>   

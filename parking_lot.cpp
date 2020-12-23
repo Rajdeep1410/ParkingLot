@@ -1,3 +1,12 @@
+/* 
+
+parking_lot.cpp --> Parking Lot program containing the logic
+
+Created By: Rajdeep Kundu
+Date: 23 Dec 2020
+
+*/ 
+
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <string>
