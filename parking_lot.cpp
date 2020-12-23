@@ -1,4 +1,11 @@
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <queue>    
+
+
 using namespace std;
 
 class Car
@@ -17,11 +24,11 @@ public:
 
 class ParkingLot
 {
-    // registration_slot_mapping is an unordered_map that will have key as registration_no(string) and value as slot(int)
-    unordered_map<string, int> registration_slot_mapping;
+    // registration_slot_mapping is a map(ordered by default) that will have key as registration_no(string) and value as slot(int)
+    map<string, int> registration_slot_mapping;
 
-    // registration_color_mapping is an unordered_map that will have key as color(string) and value as registration_no(string)
-    unordered_map<string, string> registration_color_mapping;
+    // registration_color_mapping is a map(ordered by default) that will have key as color(string) and value as registration_no(string)
+    map<string, string> registration_color_mapping;
 
     // slot_car_mapping is a map(ordered by default) to maintain the orders of cars while showing status
     // it will have key as slot(int) and value as car(Car object)
@@ -126,7 +133,7 @@ public:
             return 0;
         }
 
-        cout << "Allocated slot number is: " << slot_no << endl;
+        cout << "Allocated slot number: " << slot_no << endl;
         slot_car_mapping.insert({slot_no, car});
         registration_slot_mapping.insert({car.registration_number, slot_no});
         registration_color_mapping.insert({car.registration_number, car.color});
@@ -150,7 +157,7 @@ public:
 
         if (flag != 0)
         {
-            cout << "Registration numbers matching the given color are: " << endl;
+            // cout << "Registration numbers matching the given color are: " << endl;
             for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
             {
                 cout << registration_numbers[i] << ", ";
@@ -187,7 +194,7 @@ public:
                 slots.push_back(registration_slot_mapping[registration_numbers[i]]);
             }
 
-            cout << "The slot numbers matching the given color are: " << endl;
+            // cout << "The slot numbers matching the given color are: " << endl;
             for (int i = 0; i < slots.size() - 1; i++) // running till second-last
             {
                 cout << slots[i] << ", ";
@@ -216,7 +223,7 @@ public:
         }
         else
         {
-            cout << "Slot not found" << endl;
+            cout << "Not found" << endl;    // slot not found
             return slot_number;
         }
     }

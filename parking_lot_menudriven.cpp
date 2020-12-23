@@ -1,4 +1,10 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <queue>    
+
 using namespace std;
 
 class Car
@@ -17,11 +23,11 @@ public:
 
 class ParkingLot
 {
-    // registration_slot_mapping is an unordered_map that will have key as registration_no(string) and value as slot(int)
-    unordered_map<string, int> registration_slot_mapping;
+    // registration_slot_mapping is a map(ordered by default) that will have key as registration_no(string) and value as slot(int)
+    map<string, int> registration_slot_mapping;
 
-    // registration_color_mapping is an unordered_map that will have key as color(string) and value as registration_no(string)
-    unordered_map<string, string> registration_color_mapping;
+    // registration_color_mapping is a map(ordered by default) that will have key as color(string) and value as registration_no(string)
+    map<string, string> registration_color_mapping;
 
     // slot_car_mapping is a map(ordered by default) to maintain the orders of cars while showing status
     // it will have key as slot(int) and value as car(Car object)
