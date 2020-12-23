@@ -45,7 +45,7 @@ public:
 
     */
 
-    // The below function takes total slots as param input and creates a parking lot accordingly
+    // The below function takes total slots as parameter input and creates a parking lot accordingly
 
     bool create_parking_lot(int total_slots)
     {
@@ -58,7 +58,7 @@ public:
         return true;
     }
 
-    // the below function returns the status of the parking lot
+    // The below function returns the status of the parking lot
 
     bool status()
     {
@@ -73,7 +73,7 @@ public:
         return true;
     }
 
-    // This function will be needed to get the nearest available slot
+    // The below function returns the nearest available slot
 
     int get_nearest_slot()
     {
@@ -121,6 +121,7 @@ public:
     }
 
     // The below function will park a car in an empty available slot and return the slot number
+    // It takes a car object as input
 
     int park(Car car)
     {
@@ -140,6 +141,7 @@ public:
     }
 
     // The below function will give the Registration numbers of all cars of a particular colour
+    // The color of the car is taken as parameter input
 
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
@@ -161,17 +163,10 @@ public:
     }
 
     // The below function will give the Slot numbers of all slots where a car of a particular colour is parked
+    // The color of the car is taken as parameter input
     vector<int> slot_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        int c = 0; //added
-        // To spot error below loop
-        cout << "Iterating the color_registraion map" << endl;
-        for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
-        {
-            cout << "Regitration Number = " << it->first << " Color = " << it->second << endl;
-        }
-        //  added till here
         for (auto it : registration_color_mapping)
         {
             if ((it.second) == color)
@@ -181,7 +176,6 @@ public:
         }
 
         vector<int> slots;
-
         for (int i = 0; i < registration_numbers.size(); i++)
         {
             slots.push_back(registration_slot_mapping[registration_numbers[i]]);
@@ -197,6 +191,8 @@ public:
         return slots;
     }
 
+    // The below function checks for the slot no of the car by taking registration_number as parameter input
+    // If no such car found, then displays "Slot not found"
     int slot_number_for_registration_number(string registration_number)
     {
         int slot_number = 0;
@@ -215,7 +211,7 @@ public:
 };
 
 // *********************************************************************************************************************************
-// ADDED TO TEST
+// MENU-DRIVEN (SWITCH-CASE) ADDED TO TEST
 // *********************************************************************************************************************************
 
 int main()
@@ -280,7 +276,6 @@ int main()
             cout << " To display slot_numbers_for_cars_with_colour " << endl;
             cout << "Enter color: " << endl;
             cin >> color;
-            cout << "Slot numbers are: " << endl;
             parking_lot.slot_numbers_for_cars_with_colour(color);
             break;
 
