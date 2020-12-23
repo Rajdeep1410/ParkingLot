@@ -1,13 +1,9 @@
 #include <bits/stdc++.h>
-// #include <queue>
-// #include <map>
-
 using namespace std;
 
 class Car
 {
     // as of now declaring all the data members as public
-
 public:
     string registration_number;
     string color;
@@ -40,25 +36,16 @@ public:
     /* Below constructor to modify and implement
 
     ParkingLot()
-    {
-
-        // registration_slot_mapping is a map(ordered by default) that will have key as registration_no(string) and value as slot(int) 
+    { 
         map<string, int> registration_slot_mapping;
-
-        // registration_color_mapping is a map(ordered by default) that will have key as color(string) and value as registration_no(string) 
         map<string, string> registration_color_mapping;
-
-        // slot_car_mapping is a map(ordered by default) to maintain the orders of cars while showing status
-        // it will have key as slot(int) and value as car(Car object) 
         map <int, Car> slot_car_mapping;
-
-        // we will initialize all slots as free
-        vector<int> available_parking_lots = {0};
+        priority_queue<int, vector<int>, greater<int>> available_parking_lots;
     }
 
     */
 
-    // The below function takes total slots as param input and creates a parking lot accordingly
+    // The below function takes total slots as parameter input and creates a parking lot accordingly
 
     bool create_parking_lot(int total_slots)
     {
@@ -71,7 +58,7 @@ public:
         return true;
     }
 
-    // the below function returns the status of the parking lot
+    // The below function returns the status of the parking lot
 
     bool status()
     {
@@ -86,7 +73,7 @@ public:
         return true;
     }
 
-    // This function will be needed to get the nearest available slot
+    // The below function returns the nearest available slot
 
     int get_nearest_slot()
     {
@@ -134,6 +121,7 @@ public:
     }
 
     // The below function will park a car in an empty available slot and return the slot number
+    // It takes a car object as input
 
     int park(Car car)
     {
@@ -148,93 +136,53 @@ public:
         cout << " Allocated slot number is: " << slot_no << endl;
         slot_car_mapping.insert({slot_no, car});
         registration_slot_mapping.insert({car.registration_number, slot_no});
-        // // To spot error below loop
-        // cout<<"Iterating the registration_slot_mapping while parking "<<endl;
-        // for (auto it = registration_slot_mapping.begin(); it != registration_slot_mapping.end(); it++)
-        // {
-        //     cout<<"Registration Number = "<<it->first<<" Slot = "<<it->second<<endl;
-        // }
-        // //  added till here
         registration_color_mapping.insert({car.registration_number, car.color});
-        // // To spot error below loop
-        // cout<<"Iterating the color_registraion map while parking "<<endl;
-        // for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
-        // {
-        //     cout<<"Registration No = "<<it->first<<" Color = "<<it->second<<endl;
-        // }
-        // //  added till here
         return slot_no;
     }
 
     // The below function will give the Registration numbers of all cars of a particular colour
+    // The color of the car is taken as parameter input
 
     vector<string> registration_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        // for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
-        // {
-        //     if (it->first == color)
-        //     {
-        //         registration_numbers.push_back(it->second);
-        //     }
-        // }
         for (auto it : registration_color_mapping)
         {
             if (it.second == color)
                 registration_numbers.push_back(it.first);
         }
-        // cout << "Size of vector registration_numbers: " << registration_numbers.size() << endl;
 
-        for (int i = 0; i < registration_numbers.size()-1; i++) // running till second last 
-            {
-                cout << registration_numbers[i] << ", " ;
-            }
-            cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
+        cout << "Registration numbers matching the given color are: " << endl;
+        for (int i = 0; i < registration_numbers.size() - 1; i++) // running till second-last
+        {
+            cout << registration_numbers[i] << ", ";
+        }
+        cout << registration_numbers[registration_numbers.size() - 1] << endl; // printing last stmt separately to avoid ending comma
 
         return registration_numbers;
     }
 
     // The below function will give the Slot numbers of all slots where a car of a particular colour is parked
+    // The color of the car is taken as parameter input
     vector<int> slot_numbers_for_cars_with_colour(string color)
     {
         vector<string> registration_numbers;
-        int c = 0; //added
-        // To spot error below loop
-        cout<<"Iterating the color_registraion map"<<endl;
-        for (auto it = registration_color_mapping.begin(); it != registration_color_mapping.end(); it++)
+        for (auto it : registration_color_mapping)
         {
-            cout<<"Regitration Number = "<<it->first<<" Color = "<<it->second<<endl;
-        }
-        //  added till here
-        for(auto it : registration_color_mapping)
-        {
-            // cout << "Loop number " << c++ <<" ";                                                 //added
-            // cout << "Registration in Reg map = "<<(it.first)<<" Color = " << it.second << " color required= " << color << endl; //added
             if ((it.second) == color)
             {
-                //cout << "Registration Number " << (it.first) << " pushed with color = " << (it.second) << endl; //added
                 registration_numbers.push_back(it.first);
             }
-            // /*added to see registration numers vector*/
-            // cout<<"Registration Numbers Vector :- "<<endl;
-            // for(int i = 0; i<registration_numbers.size();i++){
-            //     cout<<registration_numbers[i]<<", ";
-            // }
-            // cout<<endl;
-            // // addition completes for registration numbers
-
         }
 
         vector<int> slots;
-
         for (int i = 0; i < registration_numbers.size(); i++)
         {
             slots.push_back(registration_slot_mapping[registration_numbers[i]]);
         }
 
-        // cout << "The size of slot vector is: " << slots.size() << endl; // added
         cout << "The slot numbers matching the given color are: " << endl;
-        for (int i = 0; i < slots.size() - 1; i++)
+        for (int i = 0; i < slots.size() - 1; i++) // running till second-last
         {
             cout << slots[i] << ", ";
         }
@@ -243,10 +191,12 @@ public:
         return slots;
     }
 
+    // The below function checks for the slot no of the car by taking registration_number as parameter input
+    // If no such car found, then displays "Slot not found"
     int slot_number_for_registration_number(string registration_number)
     {
         int slot_number = 0;
-        if (auto itr = registration_slot_mapping.find(registration_number); itr != registration_slot_mapping.end()) // itr gives iterator
+        if (auto itr = registration_slot_mapping.find(registration_number); itr != registration_slot_mapping.end())
         {
             slot_number = itr->second; // itr->second gives slot
             cout << slot_number << endl;
@@ -259,94 +209,3 @@ public:
         }
     }
 };
-
-// *********************************************************************************************************************************
-// ADDED TO TEST
-// *********************************************************************************************************************************
-
-int main()
-{
-    ParkingLot parking_lot;
-    int choice, slot;
-    string reg_no = "", color = "";
-
-    do
-    {
-        cout << "\n**************MENU**************" << endl;
-        cout << "1. To create parking lot" << endl;
-        cout << "2. To park cars" << endl;
-        cout << "3. To leave" << endl;
-        cout << "4. To display status" << endl;
-        cout << "5. To display registration_numbers_for_cars_with_colour" << endl;
-        cout << "6. To display slot_numbers_for_cars_with_colour " << endl;
-        cout << "7. To display slot_number_for_registration_number" << endl;
-        cout << "8. To EXIT" << endl;
-        cout << "\nEnter your choice: ";
-
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            cout << " To create_parking_lot" << endl;
-            cout << "Enter no of slots: " << endl;
-            cin >> slot;
-            parking_lot.create_parking_lot(slot);
-            break;
-
-        case 2:
-        {
-            cout << " To park" << endl;
-            cout << "Enter reg_no and color: " << endl;
-            cin >> reg_no >> color;
-            Car car(reg_no, color);
-            parking_lot.park(car);
-            break;
-        }
-
-        case 3:
-            cout << " To leave" << endl;
-            cout << "Enter slot: " << endl;
-            cin >> slot;
-            parking_lot.leave(slot);
-            break;
-
-        case 4:
-            cout << "To display status: " << endl;
-            parking_lot.status();
-            break;
-
-        case 5:
-            cout << "To display registration_numbers_for_cars_with_colour" << endl;
-            cout << "Enter car color: " << endl;
-            cin >> color;
-            parking_lot.registration_numbers_for_cars_with_colour(color);
-            break;
-
-        case 6:
-            cout << " To display slot_numbers_for_cars_with_colour " << endl;
-            cout << "Enter color: " << endl;
-            cin >> color;
-            cout << "Slot numbers are: " << endl;
-            parking_lot.slot_numbers_for_cars_with_colour(color);
-            break;
-
-        case 7:
-            cout << " To display slot_number_for_registration_number " << endl;
-            cout << "Enter registration_number: " << endl;
-            cin >> reg_no;
-            cout << "Slot numbers are: " << endl;
-            parking_lot.slot_number_for_registration_number(reg_no);
-            break;
-
-        case 8:
-            cout << "Exiting!.." << endl;
-            exit(0);
-
-        default:
-            cout << "Wrong Choice! Please enter 1 to 8" << endl;
-            break;
-        }
-    } while (choice <= 8);
-
-    return 0;
-}
